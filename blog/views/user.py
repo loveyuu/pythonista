@@ -6,7 +6,7 @@ user = Blueprint('user', __name__, url_prefix='/users')
 
 
 class User(MethodView):
-    def get(self, user_id):
+    def get(self):
         return "get"
 
     def post(self):
@@ -35,7 +35,7 @@ user.add_url_rule(
 )
 
 user.add_url_rule(
-    '/users/signins/',
+    '/signins/',
     view_func=signin_view,
     methods=['POST'],
 )

@@ -8,21 +8,13 @@ def blog_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    from .post import post as post_blueprint
-    app.register_blueprint(post_blueprint)
+    # 注册蓝图组件
+    from .views import blueprints
+    for b in blueprints:
+        app.register_blueprint(b)
 
-    from .comment import comment as comment_blueprint
-    app.register_blueprint(comment_blueprint)
-
-    from .user import user as user_blueprint
-    app.register_blueprint(user_blueprint)
-
-    @app.errorhandler(404)
-    def page_not_found(e):
-        return 'no such resource', 404
-
-    @app.errorhandler(500)
-    def internal_server_error(e):
-        return 'server gone', 500
+    # 注册错误处理
+    from .errors import register_error
+    register_error(app)
 
     return app
