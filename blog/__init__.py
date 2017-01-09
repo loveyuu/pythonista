@@ -14,6 +14,9 @@ def blog_app(config_name):
     from .comment import comment as comment_blueprint
     app.register_blueprint(comment_blueprint)
 
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint)
+
     @app.errorhandler(404)
     def page_not_found(e):
         return 'no such resource', 404

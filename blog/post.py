@@ -6,13 +6,13 @@ post = Blueprint('post', __name__)
 
 
 class Post(MethodView):
-    def get(self, post_id):
+    def get(self, user_id, post_id):
         if post_id is None:
-            return 'this is post list'
+            return 'this is {} post list'.format(user_id)
         else:
-            return "this is get post {}".format(post_id)
+            return "this is {} get post {}".format(user_id, post_id)
 
-    def post(self):
+    def post(self, user_id):
         pass
 
     def delete(self):
@@ -23,20 +23,20 @@ class Post(MethodView):
 
 post_view = Post.as_view('post')
 post.add_url_rule(
-    '/posts/',
+    '/users/<int:user_id>/posts/',
     defaults={'post_id': None},
     view_func=post_view,
     methods=['GET'],
 )
 
 post.add_url_rule(
-    '/posts/',
+    '/users/<int:user_id>/posts/',
     view_func=post_view,
     methods=['POST'],
 )
 
 post.add_url_rule(
-    '/posts/<int:post_id>',
+    '/users/<int:user_id>/posts/<int:post_id>/',
     view_func=post_view,
     methods=['GET', 'PUT', 'DELETE'],
 )
