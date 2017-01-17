@@ -1,19 +1,18 @@
 # encoding=utf-8
-from flask import Blueprint
-from flask.views import MethodView
+from flask import Blueprint, render_template
+
+from admin import redis_store
 
 user = Blueprint('user', __name__)
 
 
-class User(MethodView):
-    def get(self):
-        return "this is get user"
+@user.route('/index/')
+def index():
+    return render_template('index.html')
 
-    def delete(self):
-        pass
 
-    def put(self):
-        pass
-
-user_view = User.as_view('user')
-user.add_url_rule('/users', view_func=user_view, methods=['GET'])
+@user.route('/settings/')
+def settings():
+    members = redis_store.provider_class.lrange('member', 0, -1)
+    print members
+    return "yes it is"

@@ -4,7 +4,7 @@ from admin import admin_app
 from blog import blog_app
 
 app = Flask(__name__)
-admin_app = admin_app('dev')
+admin_app = admin_app('year')
 
 blog_app = blog_app('dev')
 

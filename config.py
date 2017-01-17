@@ -13,6 +13,12 @@ class DevelopmentConfig(Config):
     DEBUG = False
 
 
+class YearPartyConfig(Config):
+    REDIS_URL = "redis://:password@localhost:6379/0"
+    DEBUG = False
+
+
 config = {
     'dev': DevelopmentConfig,
+    'year': YearPartyConfig,
 }

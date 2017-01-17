@@ -2,12 +2,20 @@
 from flask import Blueprint, request, jsonify
 from flask.views import MethodView
 
+import thriftpy
+
+from thriftpy.rpc import client_context
+
+pp_thrift = thriftpy.load("blog/views/movie.thrift", module_name="pp_thrift")
+
+
 user = Blueprint('user', __name__, url_prefix='/users')
 
 
 class User(MethodView):
     def get(self):
-        return "get"
+        with client_context(pp_thrift.PingService, '127.0.0.1', 8000) as c:
+            return c.register2(1001, "linbin", 24)
 
     def post(self):
         data = request.get_json()
